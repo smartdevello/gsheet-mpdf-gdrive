@@ -23,7 +23,7 @@ function getDetailedAddress($address) {
 }
 
 
-if (isset($_POST['generate_pdf'])) {
+// if (isset($_POST['generate_pdf'])) {
 
     // Reading data from spreadsheet.
     try{
@@ -42,7 +42,7 @@ if (isset($_POST['generate_pdf'])) {
     
         $spreadsheetId = "1_AONbruTz7v03z3pLL8-JlvohtwCMBVdA8SbuyDrShI"; //It is present in your URL
     
-        $get_range = "A2:M701";
+        $get_range = "A2:P701";
     
         //Request to get data from spreadsheet.
     
@@ -50,36 +50,37 @@ if (isset($_POST['generate_pdf'])) {
     
         $data = $response->getValues();
 
-
         foreach ($data as $key => $row) {
-
             $now = new DateTime();
-            ob_start();        
+            ob_start();      
+            $row = array_map('trim', $row);  
+
             list(
                 $business_name, 
-                $DBA,
-                $business_start_date,
-                $EIN,
-                $address,
-                $name,
-                $home_address,
-                $phone,
-                $email,
-                $birthdate,
                 $SSN,
-                $statements,
+                $first_name,
+                $last_name,
+                $DOB,
+                $phone, 
+                $email,
                 $turnover,
-                $firstname,
-                $lastname
+                $bank_statements,
+                $street,
+                $city,
+                $state,
+                $zipcode,
+                $owner_address,
+                $business_start_date,
+                $EIN
             ) = $row;
         
             if (empty($business_name) || $business_name == "") break;
-            if (empty($name)) $name = $firstname . " " . $lastname;
+            if (empty($name)) $name = $first_name . " " . $last_name;
 
-            $detailed_address = getDetailedAddress($address);
-            if ( count ($detailed_address) == 5) $state_incorporated = $detailed_address[3];
-            else $state_incorporated = "";
-            $detailed_homeaddress = getDetailedAddress($home_address);
+            $business_address = $street . " " . $city . " " . $state . " " . $zipcode;
+            $state_incorporated = $state;
+
+            $detailed_homeaddress = getDetailedAddress($owner_address);
         
             if ( count($detailed_homeaddress) == 5 ) {
                 $personal_address = $detailed_homeaddress[1];
@@ -102,7 +103,7 @@ if (isset($_POST['generate_pdf'])) {
             }
             $stylesheet = file_get_contents('mpdf.css'); // Get css content
             $todaydate = $now->format('m/d/Y');
-            $birthdate = date('m/d/Y', strtotime($birthdate));
+            $birthdate = date('m/d/Y', strtotime($DOB));
         
             $html = <<<EOD
             <div class="pdfpage">
@@ -141,7 +142,7 @@ if (isset($_POST['generate_pdf'])) {
                             <td style="width:25%;"><strong>Advance Amount Requested:</strong><br><p style="color:white;">I</p></td>
                         </tr>
                         <tr>
-                            <td colspan="4"><strong>Business Address: </strong><br>$address</td>
+                            <td colspan="4"><strong>Business Address: </strong><br>$business_address</td>
                         </tr>
                         <tr>
                             <td style="width:25%;"><strong>Style of Business:</strong><br><p style="color:white;">I</p></td>
@@ -474,4 +475,4 @@ if (isset($_POST['generate_pdf'])) {
         echo $e->getMessage();
     }
 
-}
+// }
