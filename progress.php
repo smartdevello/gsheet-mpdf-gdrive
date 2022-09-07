@@ -23,7 +23,7 @@ function getDetailedAddress($address) {
 }
 
 
-// if (isset($_POST['generate_pdf'])) {
+if (isset($_POST['generate_pdf'])) {
 
     // Reading data from spreadsheet.
     try{
@@ -475,4 +475,4 @@ function getDetailedAddress($address) {
         echo $e->getMessage();
     }
 
-// }
+}
