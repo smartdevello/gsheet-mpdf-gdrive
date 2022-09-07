@@ -1,0 +1,39 @@
+div.pdfpage{
+    margin-top: -20px !important;
+    padding-top: -20px !important;
+    display: block;
+}
+.head1, .head2, .head3{
+    width: 33%;
+   float: left;
+   }
+   .head2{
+       text-align: center;
+   }
+   .head3{
+       text-align: right;
+   }
+   .pdfhead {
+   }
+   .head1 p, .head2 p, .head3 p{
+    margin-bottom:0px;
+    font-size: 18px;
+   margin-top: 0px;
+   }
+   .pdfbody {
+       clear: both;
+   }
+   table.mytable {
+       border-collapse: collapse;
+   }
+   .mytable td{
+       border: 1px solid black;
+       font-size:11px;
+   }
+   .myinnertable{
+       border: none;
+       border-collapse: collapse;
+   }
+   .pdfpage p, .pdfpage a{
+    font-size: 10px;   
+   }
