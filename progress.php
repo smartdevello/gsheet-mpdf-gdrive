@@ -467,9 +467,7 @@ if (isset($_POST['generate_pdf'])) {
             $message['message'] = $createdFile;
             $pusher->trigger('google-channel', 'google-finish-event', $message);
 
-
         }
-
 
     }catch(Exception $e) {
         echo $e->getMessage();
